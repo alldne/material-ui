@@ -68,6 +68,7 @@ let Tabs = React.createClass({
       style,
       tabWidth,
       tabItemContainerStyle,
+      tabBarContainerStyle,
       ...other,
     } = this.props;
 
@@ -131,17 +132,25 @@ let Tabs = React.createClass({
     let inkBarContainerWidth = tabItemContainerStyle ?
       tabItemContainerStyle.width : '100%';
 
+    let tabBarContainerWidth = inkBarContainerWidth;
+
     return (
       <div
         {...other}
-        style={this.mergeAndPrefix(style)}>
-        <div style={this.mergeAndPrefix(styles.tabItemContainer, tabItemContainerStyle)}>
-          {tabs}
+        style={this.mergeAndPrefix({position: 'relative'}, style)}>
+        <div style={this.mergeAndPrefix({
+          width: tabBarContainerWidth,
+          position: 'absolute',
+          top: 0,
+        }, tabBarContainerStyle)}>
+          <div style={this.mergeAndPrefix(styles.tabItemContainer, tabItemContainerStyle)}>
+            {tabs}
+          </div>
+          <div style={{width: inkBarContainerWidth}}>
+           {inkBar}
+          </div>
         </div>
-        <div style={{width: inkBarContainerWidth}}>
-         {inkBar}
-        </div>
-        <div style={this.mergeAndPrefix(contentContainerStyle)}>
+        <div style={this.mergeAndPrefix({paddingTop: 50}, contentContainerStyle)}>
           {tabContent}
         </div>
       </div>
